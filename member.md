@@ -1,4 +1,4 @@
-#danh sach thanh vien nhom
+# danh sach thanh vien nhom
 
 - Nguyen Duy Tan (leader)
-  - Nguyen Thi My Kim
+- Nguyen Thi My Kim
