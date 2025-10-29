@@ -1,7 +1,6 @@
 import { NavLink } from "react-router";
 
 const Header = () => {
-  <nav className="hidden xl:flex items-center justify-start gap-10 z-30 flex-1 px-8 ml-60"></nav>;
   const navItems = [
     {
       path: "/",
