@@ -1,7 +1,6 @@
 import { NavLink } from "react-router";
 
 const Header = () => {
-  <nav className="hidden xl:flex items-center justify-start gap-10 z-30 flex-1 px-8 ml-60"></nav>;
   const navItems = [
     {
       path: "/",
@@ -30,7 +29,7 @@ const Header = () => {
   ];
   return (
     <header>
-      <div className="max-w-7xl xl:mx-auto mx-6 h-20 flex items-center justify-start gap-8 z-20 flex-1 px-8 ml-40">
+      <div className="max-w-7xl xl:mx-auto mx-6 h-20 flex items-center justify-between">
         <div className="flex items-end gap-1">
           <img
             src="https://www.freeiconspng.com/thumbs/bee-png/best-free-bee-png-image-5.png"
@@ -40,8 +39,8 @@ const Header = () => {
             STAR <br /> CINEMA
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          <ul className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
+          <ul className="flex items-center gap-6">
             {navItems.map((item, index) => (
               <li key={index}>
                 <NavLink
@@ -59,7 +58,6 @@ const Header = () => {
             <button className="border cursor-pointer hover:bg-blue-300/30 duration-300 hover:scale-105 border-white h-11 px-10 rounded-full font-medium text-base">
               Đăng ký
             </button>
-
             <button className="bg-primary cursor-pointer  h-11 px-10 rounded-full font-medium text-base duration-300 hover:scale-105">
               Đăng nhập
             </button>
