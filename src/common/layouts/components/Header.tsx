@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Header = () => {
   const navItems = [
@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <header>
       <div className="max-w-7xl xl:mx-auto mx-6 h-20 flex items-center justify-between">
-        <div className="flex items-end gap-1">
+        <Link to={"/"} className="flex items-end gap-1">
           <img
             src="https://www.freeiconspng.com/thumbs/bee-png/best-free-bee-png-image-5.png"
             className="w-16"
@@ -38,7 +38,7 @@ const Header = () => {
           <p className="m-0 font-semibold">
             STAR <br /> CINEMA
           </p>
-        </div>
+        </Link>
         <div className="flex items-center gap-6">
           <ul className="flex items-center gap-6">
             {navItems.map((item, index) => (
