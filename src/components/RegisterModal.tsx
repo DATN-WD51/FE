@@ -3,8 +3,14 @@ import type { ReactElement } from "react";
 import React, { useState } from "react";
 import type { IRegisterPayload } from "../common/types/auth";
 import { formRules } from "../common/utils/formRules";
-
-const RegisterModal = ({ children }: { children: ReactElement }) => {
+import LoginModal from "./LoginModal";
+const RegisterModal = ({
+  children,
+  onSwitch,
+}: {
+  children: ReactElement;
+  onSwitch?: () => void;
+}) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const handleSubmit = (values: IRegisterPayload) => {
@@ -14,12 +20,14 @@ const RegisterModal = ({ children }: { children: ReactElement }) => {
     <>
       {React.cloneElement(children, {
         onClick: () => {
+          if (onSwitch) onSwitch();
           setOpen(true);
         },
       } as { onClick: () => void })}
       <Modal
         onCancel={() => setOpen(false)}
         open={open}
+        afterClose={() => form.resetFields()}
         width={600}
         destroyOnHidden
         className="rounded-xl border border-white/10  backdrop-blur-md"
@@ -164,14 +172,15 @@ const RegisterModal = ({ children }: { children: ReactElement }) => {
           </Form.Item>
           <p className="text-center">
             Bạn đã có tài khoản?{" "}
-            <span className="text-primary cursor-pointer hover:underline">
-              Đăng nhập
-            </span>
+            <LoginModal onSwitch={() => setOpen(false)}>
+              <span className="text-primary cursor-pointer hover:underline">
+                Đăng nhập
+              </span>
+            </LoginModal>
           </p>
         </Form>
       </Modal>
     </>
   );
 };
-
 export default RegisterModal;
