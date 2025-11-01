@@ -1,9 +1,11 @@
 import { Button, Form, Input, Modal } from "antd";
 import type { ReactElement } from "react";
 import React, { useState } from "react";
-import type { IRegisterPayload } from "../common/types/auth";
+import { registerApi } from "../common/services/auth.service";
 import { formRules } from "../common/utils/formRules";
 import LoginModal from "./LoginModal";
+import { useMessage } from "../common/hooks/useMassage";
+
 const RegisterModal = ({
   children,
   onSwitch,
@@ -12,9 +14,25 @@ const RegisterModal = ({
   onSwitch?: () => void;
 }) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const handleSubmit = (values: IRegisterPayload) => {
-    console.log(values);
+  const { antdMessage, HandleError } = useMessage();
+  const handleSubmit = async (values: any) => {
+    setLoading(true);
+    const { confirmPassword, firstName, lastName, ...payload } = values;
+    void confirmPassword;
+    try {
+      const { message } = await registerApi({
+        userName: `${firstName} ${lastName}`,
+        ...payload,
+      });
+      antdMessage.success(message);
+      setLoading(false);
+      setOpen(false);
+    } catch (error) {
+      HandleError(error);
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -29,9 +47,9 @@ const RegisterModal = ({
         open={open}
         afterClose={() => form.resetFields()}
         width={600}
-        destroyOnHidden
         className="rounded-xl border border-white/10  backdrop-blur-md"
         style={{
+          top: 30,
           background: `hsl(222.2 84% 4.9%)`,
         }}
         title={
@@ -159,6 +177,7 @@ const RegisterModal = ({
           </div>
           <Form.Item className="mt-4!">
             <Button
+              loading={isLoading}
               htmlType="submit"
               style={{
                 background: `var(--color-primary)`,
@@ -183,4 +202,5 @@ const RegisterModal = ({
     </>
   );
 };
+
 export default RegisterModal;
