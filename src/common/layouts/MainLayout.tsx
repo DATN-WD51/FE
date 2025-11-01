@@ -1,6 +1,5 @@
-import { ConfigProvider, theme } from "antd";
+import { App, ConfigProvider, theme } from "antd";
 import { Outlet } from "react-router";
-
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
@@ -23,11 +22,13 @@ const MainLayout = () => {
           },
         }}
       >
-        <Header />
-        <main className="min-h-screen">
-          <Outlet />
-        </main>
-        <Footer />
+        <App>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </App>
       </ConfigProvider>
     </div>
   );
