@@ -1,7 +1,8 @@
 import type { RouteObject } from "react-router";
 import MainLayout from "../common/layouts/MainLayout";
 import HomePage from "../pages/client/home/HomePage";
-import AboutPage from "../pages/about/AboutPage";
+import VerifyUser from "../pages/client/auth/VerifyUser";
+
 export const MainRoutes: RouteObject[] = [
   {
     path: "",
@@ -11,10 +12,10 @@ export const MainRoutes: RouteObject[] = [
         index: true,
         element: <HomePage />,
       },
-      {
-        path: "about",
-        element: <AboutPage />,
-      },
     ],
+  },
+  {
+    path: "verify",
+    element: <VerifyUser />,
   },
 ];
