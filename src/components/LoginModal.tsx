@@ -1,12 +1,13 @@
 import { Button, Form, Input, Modal } from "antd";
 import type { ReactElement } from "react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { IRegisterPayload } from "../common/types/auth";
 import { formRules } from "../common/utils/formRules";
 import RegisterModal from "./RegisterModal";
-import { loginApi } from "../common/services/auth.service";
 import { useAuthSelector } from "../common/stores/useAuthStore";
+import { useNavigate, useSearchParams } from "react-router";
 import { useMessage } from "../common/hooks/useMassage";
+import { loginApi } from "../common/services/auth.service";
 
 const LoginModal = ({
   children,
@@ -15,7 +16,9 @@ const LoginModal = ({
   children: ReactElement;
   onSwitch?: () => void;
 }) => {
-  const [open, setOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const nav = useNavigate();
+  const [open, setOpen] = useState(!!searchParams.get("loginModal"));
   const [form] = Form.useForm();
   const { antdMessage, HandleError } = useMessage();
   const login = useAuthSelector((state) => state.login);
@@ -33,8 +36,17 @@ const LoginModal = ({
       setLoading(false);
       HandleError(error);
     }
-    console.log(values);
   };
+
+  useEffect(() => {
+    if (searchParams.get("loginModal")) {
+      searchParams.delete("loginModal");
+      nav({
+        pathname: window.location.pathname,
+        search: searchParams.toString(),
+      });
+    }
+  }, [nav, searchParams]);
   return (
     <>
       {React.cloneElement(children, {
@@ -112,7 +124,8 @@ const LoginModal = ({
               Đăng nhập
             </Button>
           </Form.Item>
-          <p className="text-center">
+
+          <p className="text-center mt-6">
             Bạn đã chưa tài khoản?{" "}
             <RegisterModal onSwitch={() => setOpen(false)}>
               <span className="text-primary cursor-pointer hover:underline">
