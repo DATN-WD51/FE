@@ -16,3 +16,15 @@ export const loginApi = async (
   const { data } = await api.post("/auth/login", payload);
   return data;
 };
+
+export const loginGoogle = async (): Promise<TypeResponse<string>> => {
+  const { data } = await api.post("/auth/google/login");
+  return data;
+};
+
+export const resetPasswordApi = async (payload: {
+  email: string;
+}): Promise<TypeResponse<IUser>> => {
+  const { data } = await api.post("/auth/reset-password", payload);
+  return data;
+};
