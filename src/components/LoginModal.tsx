@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import type { IRegisterPayload } from "../common/types/auth";
 import { formRules } from "../common/utils/formRules";
 import RegisterModal from "./RegisterModal";
-import { useNavigate, useSearchParams } from "react-router";
 import { useMessage } from "../common/hooks/useMassage";
 import { loginApi, loginGoogle } from "../common/services/auth.service";
 import { useAuthSelector } from "../common/stores/useAuthStore";
 import { GoogleOutlined } from "@ant-design/icons";
+import { useNavigate, useSearchParams } from "react-router";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const LoginModal = ({
   children,
@@ -33,6 +34,9 @@ const LoginModal = ({
       const { data, message } = await loginApi(values);
       antdMessage.success(message);
       login(data.user, data.accessToken);
+      if (data.user.role === "admin") {
+        nav("/admin");
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -45,12 +49,12 @@ const LoginModal = ({
       const { data } = await loginGoogle();
       setLoading(false);
       window.location.href = data;
+      searchParams.delete("loginModal");
     } catch (error) {
       setLoading(false);
       HandleError(error);
     }
   };
-
   useEffect(() => {
     if (searchParams.get("loginModal")) {
       searchParams.delete("loginModal");
@@ -121,11 +125,14 @@ const LoginModal = ({
             />
           </Form.Item>
           <div className="flex justify-end">
-            <span className="text-primary">Quên mật khẩu</span>
+            <ForgotPasswordModal onSwitch={() => setOpen(false)}>
+              <span className="text-primary cursor-pointer">Quên mật khẩu</span>
+            </ForgotPasswordModal>
           </div>
           <Form.Item className="mt-4!">
             <Button
               loading={loading}
+              disabled={loading || isLoadingGoogle}
               htmlType="submit"
               style={{
                 background: `var(--color-primary)`,
@@ -137,7 +144,6 @@ const LoginModal = ({
               Đăng nhập
             </Button>
           </Form.Item>
-
           <Button
             onClick={() => handleLoginGoogle()}
             loading={isLoadingGoogle}
@@ -151,7 +157,6 @@ const LoginModal = ({
           >
             Đăng nhập với google
           </Button>
-
           <p className="text-center mt-6">
             Bạn đã chưa tài khoản?{" "}
             <RegisterModal onSwitch={() => setOpen(false)}>
