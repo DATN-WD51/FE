@@ -1,7 +1,9 @@
 import type { RouteObject } from "react-router";
 import MainLayout from "../common/layouts/MainLayout";
 import HomePage from "../pages/client/home/HomePage";
-import AboutPage from "../pages/about/AboutPage";
+import VerifyUser from "../pages/client/auth/VerifyUser";
+import LoginGoogle from "../pages/client/auth/LoginGoogle";
+
 export const MainRoutes: RouteObject[] = [
   {
     path: "",
@@ -11,10 +13,14 @@ export const MainRoutes: RouteObject[] = [
         index: true,
         element: <HomePage />,
       },
-      {
-        path: "about",
-        element: <AboutPage />,
-      },
     ],
+  },
+  {
+    path: "login-google/:token",
+    element: <LoginGoogle />,
+  },
+  {
+    path: "verify",
+    element: <VerifyUser />,
   },
 ];

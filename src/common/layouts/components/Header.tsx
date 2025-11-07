@@ -1,10 +1,10 @@
 import { NavLink } from "react-router";
+import { Badge } from "antd";
+import UserToolBar from "./UserToolBar";
 import RegisterModal from "../../../components/RegisterModal";
 import LoginModal from "../../../components/LoginModal";
 import { useAuthSelector } from "../../stores/useAuthStore";
 import { BellOutlined, HeartFilled } from "@ant-design/icons";
-import { Badge } from "antd";
-import UserToolBar from "./UserToolBar";
 
 const Header = () => {
   const user = useAuthSelector((state) => state.user);
