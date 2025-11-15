@@ -8,6 +8,7 @@ import ListUser from "../pages/admin/user/ListUser";
 import CreateMovie from "../pages/admin/movie/create/CreateMovie";
 import UpdateMovie from "../pages/admin/movie/update/UpdateMovie";
 import CreateCategory from "../pages/admin/category/create/CreateCategory";
+import ListCategory from "../pages/admin/category/ListCategory";
 
 export const AdminRoutes: RouteObject[] = [
   {
@@ -41,6 +42,10 @@ export const AdminRoutes: RouteObject[] = [
           {
             path: "create",
             element: <CreateCategory />,
+          },
+          {
+            index: true,
+            element: <ListCategory />,
           },
         ],
       },
