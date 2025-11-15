@@ -9,6 +9,7 @@ import CreateMovie from "../pages/admin/movie/create/CreateMovie";
 import UpdateMovie from "../pages/admin/movie/update/UpdateMovie";
 import CreateCategory from "../pages/admin/category/create/CreateCategory";
 import ListCategory from "../pages/admin/category/ListCategory";
+import UpdateCategory from "../pages/admin/category/update/UpdateCategory";
 
 export const AdminRoutes: RouteObject[] = [
   {
@@ -46,6 +47,10 @@ export const AdminRoutes: RouteObject[] = [
           {
             index: true,
             element: <ListCategory />,
+          },
+          {
+            path: "update/:id",
+            element: <UpdateCategory />,
           },
         ],
       },
