@@ -10,12 +10,12 @@ import { Link } from "react-router";
 import type { IMovie } from "../../../../common/types/movie";
 import { getAgeBadge } from "../../../../common/utils/agePolicy";
 import TextNowWrap from "../../../../components/TextNowWrap";
-
 import { updateStatusMovie } from "../../../../common/services/movie.service";
 import { QUERYKEY } from "../../../../common/constants/queryKey";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMessage } from "../../../../common/hooks/useMassage";
-
+import type { ICategory } from "../../../../common/types/category";
+import { statusRelease } from "../../../../common/constants/indexl";
 export const columnMovie = (
   getSorterProps: (field: keyof IMovie) => object,
 ) => {
@@ -73,8 +73,12 @@ export const columnMovie = (
       dataIndex: "category",
       key: "category",
       width: 150,
-      render: (category: string[]) => (
-        <TextNowWrap text={category.join(", ")} />
+      render: (category: ICategory[]) => (
+        <TextNowWrap
+          text={
+            category?.map((item) => item.name)?.join(", ") || "Chưa cập nhật"
+          }
+        />
       ),
     },
     {
@@ -97,18 +101,27 @@ export const columnMovie = (
       },
     },
     {
-      title: <p style={{ whiteSpace: "nowrap", margin: 0 }}>Ngày công chiếu</p>,
+      title: (
+        <p style={{ whiteSpace: "nowrap", margin: 0 }}>
+          Ngày công chiếu - Ngày kết thúc
+        </p>
+      ),
       dataIndex: "releaseDate",
       key: "releaseDate",
       width: 100,
       ...getSorterProps("releaseDate"),
-      render: (releaseDate: string) => {
-        const isReleased = dayjs(releaseDate) < dayjs();
+      render: (releaseDate: string, record: IMovie) => {
         return (
           <div>
-            <TextNowWrap text={dayjs(releaseDate).format("DD/MM/YYYY")} />
-            <Tag color={isReleased ? "blue" : "green"} className="mt-1!">
-              {isReleased ? "Đã công chiếu" : "Chưa công chiếu"}
+            <div className="flex items-center gap-2">
+              <TextNowWrap text={dayjs(releaseDate).format("YYYY-MM-DD")} />-
+              <TextNowWrap text={dayjs(record.endDate).format("YYYY-MM-DD")} />
+            </div>
+            <Tag
+              color={statusRelease[record.statusRelease].color}
+              className="mt-1!"
+            >
+              {statusRelease[record.statusRelease].label}
             </Tag>
           </div>
         );

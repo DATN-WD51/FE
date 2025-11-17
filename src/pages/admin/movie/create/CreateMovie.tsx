@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   DatePicker,
@@ -10,7 +10,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { Link, useNavigate } from "react-router";
-
+import { getAllCategory } from "../../../../common/services/category.service";
 import { createMovieAPI } from "../../../../common/services/movie.service";
 import { formRules } from "../../../../common/utils/formRules";
 import { uploadImage } from "../../../../common/utils/upload";
@@ -53,6 +53,10 @@ const CreateMovie = () => {
     await mutateAsync({ ...values, status: true });
     setLoading(false);
   };
+  const { data: categoryData } = useQuery({
+    queryKey: [QUERYKEY.CATEGORY],
+    queryFn: () => getAllCategory({ status: true }),
+  });
   return (
     <div className="bg-[#121822] w-full min-h-[85dvh] rounded-md shadow-md px-6 py-4 relative">
       <div className="flex items-center justify-between">
@@ -106,18 +110,19 @@ const CreateMovie = () => {
               </Form.Item>
               <Form.Item
                 label="Thể loại phim"
-                tooltip="Nhập tên thể loại và ấn enter bạn có thể thêm thể loại phim tiếp theo"
                 name={"category"}
                 required
                 rules={[formRules.required("Thể loại phim")]}
               >
                 <Select
-                  suffixIcon={null}
-                  mode="tags"
-                  placeholder="Nhập tên thể loại và nhấn enter"
+                  mode="multiple"
+                  placeholder="Chọn thể loại phim"
                   style={{ width: "100%", height: 35 }}
                   tokenSeparators={[","]}
-                  open={false}
+                  options={categoryData?.data.map((item) => ({
+                    value: item._id,
+                    label: item.name,
+                  }))}
                 />
               </Form.Item>
               <Form.Item
@@ -153,56 +158,95 @@ const CreateMovie = () => {
               >
                 <Input placeholder="Nhập tên đạo diễn" style={{ height: 35 }} />
               </Form.Item>
-              <Form.Item
-                label="Diễn viên"
-                name={"actor"}
-                tooltip="Nhập tên một diễn viên bất kỳ và enter bạn có thể nhập được tên diễn viên tiếp theo"
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập danh sách diễn viên",
-                  },
-                ]}
-              >
-                <Select
-                  mode="tags"
-                  suffixIcon={null}
-                  placeholder="Nhập tên diễn viên và nhấn Enter"
-                  style={{ width: "100%", height: 35 }}
-                  tokenSeparators={[","]}
-                  open={false}
-                />
-              </Form.Item>
             </div>
-            <div className="flex-1">
-              <Form.Item label="Trailer youtube" name={"trailer"}>
-                <Input placeholder="Nhập link youtube" style={{ height: 35 }} />
-              </Form.Item>
-              <Form.Item
-                label="Ngày công chiếu"
-                name={"releaseDate"}
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng chọn ngày công chiếu",
-                  },
-                ]}
-              >
-                <DatePicker
-                  placeholder="Chọn ngày công chiếu"
-                  style={{ height: 35, width: "100%" }}
-                  disabledDate={(current) =>
-                    current && current < dayjs().startOf("day")
-                  }
-                />
-              </Form.Item>
-            </div>
+            <div className="flex-1"></div>
+            <Form.Item
+              label="Trailer youtube"
+              name={"trailer"}
+              style={{ flex: 1 }}
+            >
+              <Input placeholder="Nhập link youtube" style={{ height: 35 }} />
+            </Form.Item>
           </section>
+          <Form.Item
+            label="Diễn viên"
+            name={"actor"}
+            tooltip="Nhập tên một diễn viên bất kỳ và enter bạn có thể nhập được tên diễn viên tiếp theo"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập danh sách diễn viên",
+              },
+            ]}
+          >
+            <Select
+              mode="tags"
+              suffixIcon={null}
+              placeholder="Nhập tên diễn viên và nhấn Enter"
+              style={{ width: "100%", height: 35 }}
+              tokenSeparators={[","]}
+              open={false}
+            />
+          </Form.Item>
           <Form.Item label="Mô tả phim" name={"description"}>
             <TextArea rows={5} placeholder="Nhập mô tả phim" />
           </Form.Item>
+          <div className="flex items-center gap-6">
+            <Form.Item
+              label="Ngày công chiếu"
+              name="releaseDate"
+              style={{ flex: 1 }}
+              rules={[
+                { required: true, message: "Vui lòng chọn ngày công chiếu" },
+              ]}
+            >
+              <DatePicker
+                placeholder="Chọn ngày công chiếu"
+                style={{ height: 35, width: "100%" }}
+                disabledDate={(current) =>
+                  current && current < dayjs().startOf("day").add(1)
+                }
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Ngày kết thúc"
+              name="endDate"
+              style={{ flex: 1 }}
+              dependencies={["releaseDate"]}
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn ngày kết thúc chiếu",
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    const releaseDate = getFieldValue("releaseDate");
+                    if (!value || !releaseDate) return Promise.resolve();
+
+                    const diff = dayjs(value).diff(dayjs(releaseDate), "day");
+                    if (diff < 7) {
+                      return Promise.reject(
+                        new Error(
+                          "Ngày ngừng chiếu phải cách ngày công chiếu ít nhất 1 tuần!",
+                        ),
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+            >
+              <DatePicker
+                placeholder="Chọn ngày kết thúc"
+                style={{ height: 35, width: "100%" }}
+                disabledDate={(current) =>
+                  current && current < dayjs().startOf("day").add(1)
+                }
+              />
+            </Form.Item>
+          </div>
           <Form.Item
             label="Phim nổi bật"
             name="isFeatured"
