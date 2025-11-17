@@ -15,7 +15,10 @@ export interface IMovie {
   releaseDate: string;
   isFeatured: boolean;
   status: boolean;
-  createdAt?: string;
-  endDate: string;
+  createdAt?: Date;
+  endDate: Date;
   updatedAt?: string;
+  country: string;
+  language: string;
+  subLanguage: string;
 }
