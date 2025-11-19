@@ -22,6 +22,13 @@ export const createRoom = async (
   const { data } = await api.post("/room", payLoad);
   return data;
 };
+export const updateRoom = async (
+  id: string,
+  payload: Omit<IRoom & { seats: ISeat[] }, "_id" | "status">,
+): Promise<TypeResponse<IRoom>> => {
+  const { data } = await api.patch(`/room/update/${id}`, payload);
+  return data;
+};
 export const updateStatusRoom = async (id: string) => {
   const { data } = await api.patch(`/room/status/${id}`);
   return data;
