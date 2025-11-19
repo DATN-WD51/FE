@@ -10,7 +10,7 @@ import UpdateMovie from "../pages/admin/movie/update/UpdateMovie";
 import ListRoom from "../pages/admin/room/ListRoom";
 import ListShowtime from "../pages/admin/showtime/ListShowTime";
 import ListUser from "../pages/admin/user/ListUser";
-
+import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",
@@ -36,6 +36,10 @@ export const AdminRoutes: RouteObject[] = [
             element: <UpdateMovie />,
           },
         ],
+      },
+      {
+        path: "detail/:id",
+        element: <DetailMovie />,
       },
       {
         path: "category",
