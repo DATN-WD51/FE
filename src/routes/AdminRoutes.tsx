@@ -12,6 +12,7 @@ import ListShowtime from "../pages/admin/showtime/ListShowTime";
 import ListUser from "../pages/admin/user/ListUser";
 import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
 import CreateRoom from "../pages/admin/room/create/CreateRoom";
+import SeatRoom from "../pages/admin/room/SeatRoom/SeatRoom";
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",
@@ -69,6 +70,15 @@ export const AdminRoutes: RouteObject[] = [
           {
             path: "create",
             element: <CreateRoom />,
+          },
+          {
+            path: "seat",
+            children: [
+              {
+                path: ":id",
+                element: <SeatRoom />,
+              },
+            ],
           },
         ],
       },
