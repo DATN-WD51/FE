@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router";
 import { QUERYKEY } from "../../../../common/constants/queryKey";
 import { getDetailMovie } from "../../../../common/services/movie.service";
 import { getAgeBadge } from "../../../../common/utils/agePolicy";
-import { statusRelease } from "../../../../common/constants/indexl";
+import { statusRelease } from "../../../../common/constants";
 const DetailMovie = () => {
   const { id } = useParams();
   const { data, isPending } = useQuery({

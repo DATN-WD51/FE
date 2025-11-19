@@ -12,3 +12,8 @@ export const statusRelease = {
     color: "red",
   },
 };
+export const seatTypeColor = {
+  NORMAL: "#252A31",
+  VIP: "#faad14",
+  COUPLE: "#eb2f96",
+};
