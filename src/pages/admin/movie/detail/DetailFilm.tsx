@@ -6,6 +6,7 @@ import { QUERYKEY } from "../../../../common/constants/queryKey";
 import { getDetailMovie } from "../../../../common/services/movie.service";
 import { getAgeBadge } from "../../../../common/utils/agePolicy";
 import { statusRelease } from "../../../../common/constants/indexl";
+
 const DetailMovie = () => {
   const { id } = useParams();
   const { data, isPending } = useQuery({
