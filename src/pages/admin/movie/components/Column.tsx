@@ -15,7 +15,7 @@ import { QUERYKEY } from "../../../../common/constants/queryKey";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMessage } from "../../../../common/hooks/useMassage";
 import type { ICategory } from "../../../../common/types/category";
-import { statusRelease } from "../../../../common/constants/indexl";
+import { statusRelease } from "../../../../common/constants";
 export const columnMovie = (
   getSorterProps: (field: keyof IMovie) => object,
 ) => {
