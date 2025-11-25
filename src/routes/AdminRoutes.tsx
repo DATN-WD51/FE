@@ -13,7 +13,7 @@ import UpdateCategory from "../pages/admin/category/update/UpdateCategory";
 import SeatRoom from "../pages/admin/room/SeatRoom/SeatRoom";
 import CreateRoom from "../pages/admin/room/create/CreateRoom";
 import UpdateRoom from "../pages/admin/room/update/UpdateRoom";
-
+import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",
@@ -37,6 +37,10 @@ export const AdminRoutes: RouteObject[] = [
           {
             path: "update/:id",
             element: <UpdateMovie />,
+          },
+          {
+            path: "detail/:id",
+            element: <DetailMovie />,
           },
         ],
       },
