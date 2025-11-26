@@ -132,10 +132,10 @@ export const columnMovie = (
               <TextNowWrap text={dayjs(record.endDate).format("YYYY-MM-DD")} />
             </div>
             <Tag
-              color={statusRelease[record.statusRelease].color}
+              color={statusRelease?.[record.statusRelease]?.color}
               className="mt-1!"
             >
-              {statusRelease[record.statusRelease].label}
+              {statusRelease?.[record.statusRelease]?.label}
             </Tag>
           </div>
         );
