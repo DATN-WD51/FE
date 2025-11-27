@@ -22,14 +22,14 @@ export const convertObject = (inputObj: InputObject): InputObject => {
   }, {} as InputObject);
 };
 
-export const useTableHook = <T extends object>() => {
+export const useTableHook = <T extends object>(prefix = "") => {
   const {
     query,
     resetFilter: reset,
     resetFilterExceptPageAndLimit,
     updateQueryParams,
-  } = useFilterHook();
-  // ACTION FILTER
+  } = useFilterHook(prefix);
+
   const getFilteredValue = (key: string) => {
     return query[key] ? (query[key] as string).split(",") : undefined;
   };
@@ -42,7 +42,6 @@ export const useTableHook = <T extends object>() => {
     }
   };
 
-  // HANDLE ONCHANGE
   const onChangeSearchInput = useMemo(() => {
     return debounce(
       (text: string, options: { enableOnChangeSearch: boolean }) => {
