@@ -15,6 +15,7 @@ import ListShowtime from "../pages/admin/showtime/ListShowTime";
 import ListUser from "../pages/admin/user/ListUser";
 import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
 
+import CreateMovieShowtime from "../pages/admin/showtime/create/CreateMovieShowtime";
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",
@@ -91,6 +92,13 @@ export const AdminRoutes: RouteObject[] = [
       {
         path: "showtime",
         element: <ListShowtime />,
+        children: [
+          { path: "movie/:id", element: <ListShowtimeInMovie /> },
+          {
+            path: "create",
+            element: <CreateMovieShowtime />,
+          },
+        ],
       },
       {
         path: "user",
