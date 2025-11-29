@@ -1,16 +1,18 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { useEffect, useRef } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { useFilterStore } from "../stores/useFilterStore";
 import type { IParams } from "../types/parameter";
 import { debounce } from "lodash";
 
-export const useFilterHook = (debounceTime = 100) => {
+export const useFilterHook = (prefix = "") => {
+  prefix = prefix ? prefix + "_" : prefix;
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isFirstLoadRef = useRef(true);
   const {
     query,
+    getQuery,
     setQuery,
     resetFilter,
     resetFilterExceptPageAndLimit,
@@ -18,7 +20,6 @@ export const useFilterHook = (debounceTime = 100) => {
     onChangeSearchInput,
   } = useFilterStore();
 
-  // Khi load lần đầu -> lấy params từ URL vào store
   useEffect(() => {
     const params: IParams = {};
     searchParams.forEach((value, key) => (params[key] = value));
@@ -39,15 +40,19 @@ export const useFilterHook = (debounceTime = 100) => {
       });
       navigate(`${pathname}?${newParams.toString()}`, { replace: true });
     };
-    const debounced = debounce(updateUrl, debounceTime);
+    const debounced = debounce(updateUrl, 100);
     debounced();
     return () => debounced.cancel();
-  }, [query, pathname, navigate, debounceTime]);
+  }, [query, pathname, navigate]);
+
   return {
-    query,
-    updateQueryParams,
-    resetFilter,
-    resetFilterExceptPageAndLimit,
-    onChangeSearchInput,
+    query: getQuery(prefix),
+    updateQueryParams: (params: IParams) => updateQueryParams(params, prefix),
+    resetFilter: () => resetFilter(prefix),
+    resetFilterExceptPageAndLimit: () => resetFilterExceptPageAndLimit(prefix),
+    onChangeSearchInput: (
+      text: string,
+      options: { enableOnChangeSearch: boolean },
+    ) => onChangeSearchInput(text, { ...options, prefix }),
   };
 };
