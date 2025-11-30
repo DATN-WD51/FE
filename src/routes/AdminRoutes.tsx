@@ -1,21 +1,22 @@
 import type { RouteObject } from "react-router";
 import AdminLayout from "../common/layouts/AdminLayout";
+import DashBoard from "../pages/admin/dashboard/DashBoard";
+import ListMovie from "../pages/admin/movie/ListMovie";
+import ListRoom from "../pages/admin/room/ListRoom";
+import ListShowtime from "../pages/admin/showtime/ListShowTime";
+import ListUser from "../pages/admin/user/ListUser";
+import CreateMovie from "../pages/admin/movie/create/CreateMovie";
+import UpdateMovie from "../pages/admin/movie/update/UpdateMovie";
 import ListCategory from "../pages/admin/category/ListCategory";
 import CreateCategory from "../pages/admin/category/create/CreateCategory";
 import UpdateCategory from "../pages/admin/category/update/UpdateCategory";
-import DashBoard from "../pages/admin/dashboard/DashBoard";
-import ListMovie from "../pages/admin/movie/ListMovie";
-import CreateMovie from "../pages/admin/movie/create/CreateMovie";
-import UpdateMovie from "../pages/admin/movie/update/UpdateMovie";
-import ListRoom from "../pages/admin/room/ListRoom";
 import SeatRoom from "../pages/admin/room/SeatRoom/SeatRoom";
 import CreateRoom from "../pages/admin/room/create/CreateRoom";
 import UpdateRoom from "../pages/admin/room/update/UpdateRoom";
-import ListShowtime from "../pages/admin/showtime/ListShowTime";
-import ListUser from "../pages/admin/user/ListUser";
 import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
-
+import ListShowtimeInMovie from "../pages/admin/showtime/showtimeMovie/ListShowtimeInMovie";
 import CreateMovieShowtime from "../pages/admin/showtime/create/CreateMovieShowtime";
+
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",

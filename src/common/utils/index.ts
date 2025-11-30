@@ -5,6 +5,11 @@ import { twMerge } from "tailwind-merge";
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
+
+export const formatCurrency = (amount: number): string => {
+  return amount.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+};
+
 export const antdInputNumberPropsCurrency = (
   min: number = 10000,
   max: number = 10000000,
