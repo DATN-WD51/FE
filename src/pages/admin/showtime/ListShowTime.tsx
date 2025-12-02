@@ -109,9 +109,9 @@ const ListShowtime = () => {
                               </Tag>
                             </Tooltip>
                             <Tag
-                              color={statusRelease[item.statusRelease].color}
+                              color={statusRelease?.[item.statusRelease]?.color}
                             >
-                              {statusRelease[item.statusRelease].label}
+                              {statusRelease?.[item.statusRelease]?.label}
                             </Tag>
                           </div>
                         </div>
