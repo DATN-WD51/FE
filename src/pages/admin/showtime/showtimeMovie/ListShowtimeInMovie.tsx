@@ -16,9 +16,10 @@ import { getDetailMovie } from "../../../../common/services/movie.service";
 import { getShowtimeWeekday } from "../../../../common/services/showtime.service";
 import type { IMovie } from "../../../../common/types/movie";
 import { getAgeBadge } from "../../../../common/utils/agePolicy";
+import FilterShowtimeInMovie from "../components/CreateManyComponent";
 import type { ICategory } from "../../../../common/types/category";
 import { formatCurrency } from "../../../../common/utils";
-import FilterShowtimeInMovie from "../components/FilterShowTimeInMovie";
+import CreateShowtimeModal from "../create/CreateShowtimeModal";
 
 const ListShowtimeInMovie = () => {
   const { id: movieId } = useParams();
@@ -104,7 +105,9 @@ const ListShowtimeInMovie = () => {
                   </p>
                 </div>
                 <div>
-                  <Button>Thêm lịch chiếu</Button>
+                  <CreateShowtimeModal movie={movie}>
+                    <Button>Thêm lịch chiếu</Button>
+                  </CreateShowtimeModal>
                 </div>
               </div>
               {data?.data && Object.entries(data?.data).length === 0 && (
