@@ -18,6 +18,7 @@ import type { IMovie } from "../../../../common/types/movie";
 import { getAgeBadge } from "../../../../common/utils/agePolicy";
 import type { ICategory } from "../../../../common/types/category";
 import { formatCurrency } from "../../../../common/utils";
+import CreateShowtimeModal from "./create/CreateShowtimeModal";
 import FilterShowtimeInMovie from "../components/FilterShowTimeInMovie";
 
 const ListShowtimeInMovie = () => {
@@ -104,7 +105,9 @@ const ListShowtimeInMovie = () => {
                   </p>
                 </div>
                 <div>
-                  <Button>Thêm lịch chiếu</Button>
+                  <CreateShowtimeModal movie={movie}>
+                    <Button>Thêm lịch chiếu</Button>
+                  </CreateShowtimeModal>
                 </div>
               </div>
               {data?.data && Object.entries(data?.data).length === 0 && (
