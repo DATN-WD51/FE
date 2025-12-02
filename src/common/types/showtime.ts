@@ -48,3 +48,9 @@ export interface ICreateManyShowtimePayload {
   dayOfWeeks: number[];
   fixedHour: string;
 }
+export interface ICreateShowtimePayload {
+  movieId: string;
+  roomId: string;
+  price: IShowtimePrice[];
+  startTime: string;
+}

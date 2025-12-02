@@ -1,31 +1,32 @@
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
-import { Button, DatePicker, Form, InputNumber, Select, Tag } from "antd";
+import { Button, DatePicker, Form, InputNumber, Select } from "antd";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router";
-import { DAYOFWEEK_LABEL } from "../../../../common/constants/dayOfWeek";
-import { QUERYKEY } from "../../../../common/constants/queryKey";
-import { getAllMovie } from "../../../../common/services/movie.service";
-import { getAllRoom } from "../../../../common/services/room.service";
-import { createManyShowtime } from "../../../../common/services/showtime.service";
-import type { IMovie } from "../../../../common/types/movie";
-import type { ICreateManyShowtimePayload } from "../../../../common/types/showtime";
-import { antdInputNumberPropsCurrency } from "../../../../common/utils";
-import { formRules } from "../../../../common/utils/formRules";
-import { DurationRangePicker } from "../../../../components/DurationPicker";
-import { useMessage } from "../../../../common/hooks/useMassage";
+import { DAYOFWEEK_LABEL } from "../../../../../../common/constants/dayOfWeek";
+import { QUERYKEY } from "../../../../../../common/constants/queryKey";
+import { getAllRoom } from "../../../../../../common/services/room.service";
+import { createManyShowtime } from "../../../../../../common/services/showtime.service";
+import type { IMovie } from "../../../../../../common/types/movie";
+import type { ICreateManyShowtimePayload } from "../../../../../../common/types/showtime";
+import { antdInputNumberPropsCurrency } from "../../../../../../common/utils";
+import { formRules } from "../../../../../../common/utils/formRules";
+import { DurationRangePicker } from "../../../../../../components/DurationPicker";
+import { useMessage } from "../../../../../../common/hooks/useMassage";
 
 const { RangePicker } = DatePicker;
 
-const CreateMovieShowtime = () => {
+const CreateManyComponent = ({
+  movie,
+  setOpen,
+}: {
+  movie: IMovie;
+  setOpen: (e: boolean) => void;
+}) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { antdMessage, HandleError } = useMessage();
-  const [movieResponse, roomResponse] = useQueries({
+  const [roomResponse] = useQueries({
     queries: [
-      {
-        queryKey: [QUERYKEY.MOVIE],
-        queryFn: () => getAllMovie({ status: true }),
-      },
       {
         queryKey: [QUERYKEY.ROOM],
         queryFn: () => getAllRoom({ status: true }),
@@ -33,10 +34,6 @@ const CreateMovieShowtime = () => {
     ],
   });
   const [form] = Form.useForm();
-  const movieSelectForm = Form.useWatch("movieId", form);
-  const movieSelected: IMovie = movieSelectForm
-    ? JSON.parse(movieSelectForm.value)
-    : ({} as IMovie);
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (payload: ICreateManyShowtimePayload) =>
       createManyShowtime(payload),
@@ -45,6 +42,7 @@ const CreateMovieShowtime = () => {
       queryClient.invalidateQueries({
         predicate: ({ queryKey }) => queryKey.includes(QUERYKEY.SHOWTIME),
       });
+      setOpen(false);
     },
     onError: (err) => HandleError(err),
   });
@@ -57,7 +55,7 @@ const CreateMovieShowtime = () => {
       ...values,
       startDate,
       endDate,
-      movieId: JSON.parse(values.movieId.value)._id,
+      movieId: movie._id,
       fixedHour: dayjs(values.fixedHour[0]).format("HH:mm"),
       price: values.price.map((item: { value: number }, index: number) => ({
         ...item,
@@ -69,20 +67,6 @@ const CreateMovieShowtime = () => {
   };
   return (
     <div className="p-4">
-      <div className="flex items-start justify-between">
-        <div>
-          <h3>Tạo mới suất chiếu</h3>
-          <p className="text-gray-300/50 whitespace-nowrap">
-            Thêm mới suất chiếu cho phim
-          </p>
-        </div>
-        <p
-          className="text-primary hover:underline duration-300 cursor-pointer"
-          onClick={() => navigate(-1)}
-        >
-          Quay trở về
-        </p>
-      </div>
       <Form
         form={form}
         initialValues={{
@@ -95,43 +79,7 @@ const CreateMovieShowtime = () => {
         layout="vertical"
         className="mt-4!"
       >
-        <Tag className="mb-4!" color="#ef4444">
-          Thông tin chiếu
-        </Tag>
         <div className="flex items-center gap-6">
-          <Form.Item
-            className="flex-1"
-            label="Phim"
-            name={"movieId"}
-            required
-            rules={[formRules.required("Phim", "choose")]}
-          >
-            <Select
-              options={movieResponse.data?.data.map((item) => ({
-                value: JSON.stringify(item),
-                label: item.name,
-                image: item.poster,
-              }))}
-              showSearch
-              labelInValue
-              placeholder="Chọn phim"
-              optionFilterProp="label"
-              onChange={() => form.setFieldsValue({ dateRange: null })}
-              optionRender={(otps) => {
-                const { data: movie } = otps;
-                return (
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={movie.image}
-                      className="w-8 h-12 rounded-md"
-                      alt=""
-                    />
-                    <p className="text-gray-300/90">{movie.label}</p>
-                  </div>
-                );
-              }}
-            />
-          </Form.Item>
           <Form.Item
             className="flex-1"
             label="Phòng chiếu"
@@ -148,9 +96,6 @@ const CreateMovieShowtime = () => {
             />
           </Form.Item>
         </div>
-        <Tag className="mb-4!" color="#ef4444">
-          Cấu hình giá tiền
-        </Tag>
         <div className="flex items-center gap-6">
           <Form.Item
             className="flex-1"
@@ -194,9 +139,6 @@ const CreateMovieShowtime = () => {
             />
           </Form.Item>
         </div>
-        <Tag className="mb-4!" color="#ef4444">
-          Thời gian chiếu
-        </Tag>
         <Form.Item
           required
           label="Ngày chiếu trong tuần"
@@ -234,14 +176,11 @@ const CreateMovieShowtime = () => {
           >
             <RangePicker
               className="w-full"
-              disabled={!movieSelectForm}
               placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
               disabledDate={(current) => {
                 if (!current) return false;
                 const tomorrow = dayjs().add(1, "day").startOf("day");
-                const releaseDate = dayjs(movieSelected.releaseDate).startOf(
-                  "day",
-                );
+                const releaseDate = dayjs(movie.releaseDate).startOf("day");
                 const minDate = releaseDate.isAfter(tomorrow)
                   ? releaseDate
                   : tomorrow;
@@ -259,13 +198,13 @@ const CreateMovieShowtime = () => {
             rules={[formRules.required("Khung giờ", "choose")]}
           >
             <DurationRangePicker
-              disabled={!movieSelected}
-              durationMinutes={movieSelected.duration}
+              disabled={false}
+              durationMinutes={movie.duration}
             />
           </Form.Item>
         </div>
         <Form.Item>
-          <div className="flex items-center gap-4 justify-end">
+          <div className="flex items-center mt-6 gap-4 justify-end">
             <Button disabled={isPending}>Đặt lại</Button>
             <Button
               onClick={() => {
@@ -276,18 +215,7 @@ const CreateMovieShowtime = () => {
               type="primary"
               htmlType="submit"
             >
-              Tạo mới và ở lại
-            </Button>
-            <Button
-              onClick={() => {
-                handleFinish(true);
-              }}
-              loading={isPending}
-              disabled={isPending}
-              type="primary"
-              htmlType="submit"
-            >
-              Tạo mới và trở về
+              Tạo mới
             </Button>
           </div>
         </Form.Item>
@@ -296,4 +224,4 @@ const CreateMovieShowtime = () => {
   );
 };
 
-export default CreateMovieShowtime;
+export default CreateManyComponent;
