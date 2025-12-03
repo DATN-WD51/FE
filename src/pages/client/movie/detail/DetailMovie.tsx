@@ -73,7 +73,7 @@ const DetailMovie = () => {
                   .join(", ")}
               </p>
               <p className="mt-2 line-clamp-5" title={movie?.description}>
-                Nội dung: ${movie?.description || "Chưa cập nhật"}
+                Nội dung: {movie?.description || "Chưa cập nhật"}
               </p>
             </div>
             <p className="text-[18px] text-primary line-clamp-1">

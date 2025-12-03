@@ -13,12 +13,13 @@ export const MainRoutes: RouteObject[] = [
         index: true,
         element: <HomePage />,
       },
+      {
+        path: "movie/:id",
+        element: <DetailMovie />,
+      },
     ],
   },
-  {
-    path: "movie/:id",
-    element: <DetailMovie />,
-  },
+
   {
     path: "login-google/:token",
     element: <LoginGoogle />,
