@@ -1,9 +1,11 @@
 import type { RouteObject } from "react-router";
 import MainLayout from "../common/layouts/MainLayout";
 import HomePage from "../pages/client/home/HomePage";
-import VerifyUser from "../pages/client/auth/VerifyUser";
 import LoginGoogle from "../pages/client/auth/LoginGoogle";
+import VerifyUser from "../pages/client/auth/VerifyUser";
 import DetailMovie from "../pages/client/movie/detail/DetailMovie";
+import ShowtimePicker from "../pages/client/movie/detail/component/ShowtimePicker";
+
 export const MainRoutes: RouteObject[] = [
   {
     path: "",
@@ -16,10 +18,13 @@ export const MainRoutes: RouteObject[] = [
       {
         path: "movie/:id",
         element: <DetailMovie />,
+        children: [
+          { index: true, element: <ShowtimePicker /> },
+          { path: ":showtimeId/:roomId", element: <ShowtimePicker /> },
+        ],
       },
     ],
   },
-
   {
     path: "login-google/:token",
     element: <LoginGoogle />,
