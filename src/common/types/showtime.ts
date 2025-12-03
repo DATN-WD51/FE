@@ -29,6 +29,7 @@ export interface IShowtime {
   status: IShowtimeStatus;
   createdAt?: string;
   updatedAt: string;
+  externalRoom?: IRoom[];
 }
 
 export interface IWeekdayShowtime {
