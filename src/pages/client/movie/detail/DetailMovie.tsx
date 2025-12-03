@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { QUERYKEY } from "../../../../common/constants/queryKey";
 import { getDetailMovie } from "../../../../common/services/movie.service";
 import type { ICategory } from "../../../../common/types/category";
@@ -7,7 +7,6 @@ import { getAgeBadge } from "../../../../common/utils/agePolicy";
 import ModalTrailer from "./component/ModalTrailer";
 import ModalDescription from "./component/ModalDescription";
 import { useEffect } from "react";
-import ShowtimePicker from "./component/ShowtimePicker";
 
 const DetailMovie = () => {
   const { id } = useParams();
@@ -99,7 +98,15 @@ const DetailMovie = () => {
           </div>
         </div>
       </div>
-      {movie?.statusRelease === "nowShowing" && <ShowtimePicker />}
+      {movie?.statusRelease === "nowShowing" ? (
+        <Outlet />
+      ) : (
+        <div className="bg-[#1a1d23] h-24 relative flex items-center justify-center">
+          <p className="text-primary font-semibold text-lg">
+            Phim chưa công chiếu
+          </p>
+        </div>
+      )}
     </div>
   );
 };
