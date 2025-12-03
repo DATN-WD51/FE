@@ -7,14 +7,24 @@ import { getAgeBadge } from "../../../../common/utils/agePolicy";
 import ModalTrailer from "./component/ModalTrailer";
 import ModalDescription from "./component/ModalDescription";
 import { useEffect } from "react";
+import { useCheckoutSelector } from "../../../../common/stores/useCheckoutStore";
+import type { IMovie } from "../../../../common/types/movie";
 
 const DetailMovie = () => {
+  const dispatchInformation = useCheckoutSelector(
+    (state) => state.setInformation,
+  );
   const { id } = useParams();
   const { data } = useQuery({
     queryKey: [QUERYKEY.MOVIE, id],
     queryFn: () => getDetailMovie(id as string),
   });
   const movie = data?.data;
+  dispatchInformation({
+    seat: [],
+    movie: movie as IMovie,
+    totalPrice: 0,
+  });
   useEffect(() => {
     window.scrollTo({
       top: 0,
