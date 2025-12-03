@@ -2,8 +2,15 @@ import { App, ConfigProvider, theme } from "antd";
 import { Outlet } from "react-router";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { useAuthSelector } from "../stores/useAuthStore";
+import { useEffect } from "react";
+import { initSocket } from "../../socket/socket-client";
+function MainLayout() {
+  const token = useAuthSelector((state) => state.token);
 
-const MainLayout = () => {
+  useEffect(() => {
+    if (token) initSocket(token as string);
+  }, [token]);
   return (
     <div className="bg-[#10141b] min-h-screen text-white">
       <ConfigProvider
@@ -32,6 +39,6 @@ const MainLayout = () => {
       </ConfigProvider>
     </div>
   );
-};
+}
 
 export default MainLayout;
