@@ -14,6 +14,7 @@ export interface ISeat {
   type: "NORMAL" | "VIP" | "COUPLE";
   status: boolean;
 }
+
 export interface ISeatStatus extends ISeat {
   userId: string | null;
   bookingStatus: string;

@@ -8,7 +8,6 @@ import {
   SEAT_STATUS,
   SEAT_STATUS_COLOR,
 } from "../../../../../common/constants/seat";
-import { useMessage } from "../../../../../common/hooks/useMessage";
 import { useUnHoldOnBack } from "../../../../../common/hooks/useUnHoldOnBack";
 import {
   getSeatShowtime,
@@ -22,13 +21,14 @@ import {
 import CountTime from "../../../../../components/CountTime";
 import { getSocket } from "../../../../../socket/socket-client";
 import { formatCurrency, getSeatPrice } from "../../../../../common/utils";
+import { useMessage } from "../../../../../common/hooks/useMassage";
 
 const SeatPicker = () => {
   const nav = useNavigate();
-  const { showtimeId, roomId } = useParams();
+  const { id, showtimeId, roomId } = useParams();
   const [searchParams] = useSearchParams();
   const hour = searchParams.get("hour");
-  useUnHoldOnBack();
+  useUnHoldOnBack(true, `/movie/${id}`);
   const userId = useAuthSelector((state) => state.user?._id);
   const { data, isLoading } = useQuery({
     queryKey: [QUERYKEY.SEAT, showtimeId, roomId],
@@ -69,6 +69,13 @@ const SeatPicker = () => {
       socket.off("seatUpdated", handleSeatUpdate);
     };
   }, [queryClient, showtimeId, socket]);
+  const handleNavCheckout = () => {
+    nav(`/checkout`);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <div className="min-h-[80vh]  mt-12">
       <div className="flex flex-col items-center">
@@ -274,6 +281,7 @@ const SeatPicker = () => {
             Quay về
           </Button>
           <Button
+            onClick={handleNavCheckout}
             disabled={!myHoldSeats?.length}
             type="primary"
             style={{
