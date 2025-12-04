@@ -50,3 +50,9 @@ export const updateShowtime = async (
   const { data } = await api.patch(`${prefix}/update/${id}`, payload);
   return data;
 };
+export const extendHoldSeat = async (showtimeId: string, seatIds: string[]) => {
+  const { data } = await api.patch(`${prefix}/extend-hold/${showtimeId}`, {
+    seatIds,
+  });
+  return data;
+};

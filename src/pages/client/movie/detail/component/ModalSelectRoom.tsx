@@ -4,6 +4,7 @@ import type { IRoom } from "../../../../../common/types/room";
 import { Link, useParams } from "react-router";
 import type { IShowtime } from "../../../../../common/types/showtime";
 import dayjs from "dayjs";
+import { useCheckoutSelector } from "../../../../../common/stores/useCheckoutStore";
 
 const ModalSelectRoom = ({
   children,
@@ -15,6 +16,7 @@ const ModalSelectRoom = ({
   showtime: IShowtime;
 }) => {
   const [open, setOpen] = useState(false);
+  const setInformation = useCheckoutSelector((state) => state.setInformation);
   const { id } = useParams();
   return (
     <>
@@ -39,6 +41,10 @@ const ModalSelectRoom = ({
         <div className="grid mt-8 grid-cols-3 gap-6 max-w-7xl mx-6 xl:mx-auto">
           {room.map((item) => (
             <Link
+              onClick={() => {
+                setOpen(false);
+                setInformation({ showtime: showtime, room: item });
+              }}
               to={`/movie/${id}/${showtime._id}/${item._id}?hour=${dayjs(showtime.startTime).format("HH:mm")}&movieId=${showtime.movieId._id}`}
             >
               <button
