@@ -30,6 +30,8 @@ export interface IShowtime {
   status: IShowtimeStatus;
   createdAt?: string;
   updatedAt: string;
+  externalRoom?: IRoom[];
+  bookedSeat?: number;
   bookedCount?: number;
 }
 
@@ -49,4 +51,18 @@ export interface ICreateManyShowtimePayload {
   endDate: string;
   dayOfWeeks: number[];
   fixedHour: string;
+}
+export interface ICreateShowtimePayload {
+  movieId: string;
+  roomId: string;
+  price: IShowtimePrice[];
+  startTime: string;
+}
+
+export interface IUpdateShowtimePayload {
+  roomId: string;
+  price: IShowtimePrice[];
+  startTime: string;
+  status: string;
+  cancelDescription?: string;
 }
