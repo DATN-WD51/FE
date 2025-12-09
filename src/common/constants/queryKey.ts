@@ -6,8 +6,6 @@ export const QUERYKEY = {
   }),
   ROOM: Object.assign("ROOM", {}),
   SEAT: Object.assign("SEAT", {}),
-  SHOWTIME: Object.assign("SHOWTIME", {}),
-  TICKET: Object.assign("TICKET", {
-    USER: "USER",
+
   }),
 };

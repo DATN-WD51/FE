@@ -7,20 +7,17 @@ export interface IMovieHasShowtime extends IMovie {
   lastStartTime: string;
   dayOfWeeks: number[];
 }
-
 export interface IPriceShowTime {
   seatType: string;
   value: number;
   _id: string;
 }
-
 export type IShowtimeStatus =
   | "scheduled"
   | "sold_out"
   | "in_progress"
   | "ended"
   | "cancelled";
-
 export interface IShowtime {
   _id: string;
   movieId: IMovie;
@@ -28,19 +25,19 @@ export interface IShowtime {
   startTime: string;
   dayOfWeek: number;
   endTime: string;
+  cancelDescription?: string;
   price: IPriceShowTime[];
   status: IShowtimeStatus;
-  cancelDescription?: string;
   createdAt?: string;
   updatedAt: string;
   externalRoom?: IRoom[];
   bookedSeat?: number;
+  bookedCount?: number;
 }
 
 export interface IWeekdayShowtime {
   [key: string]: IShowtime[];
 }
-
 export interface IShowtimePrice {
   seatType: "Regular" | "VIP" | "Couple" | string;
   value: number;
