@@ -7,6 +7,7 @@ import DetailMovie from "../pages/client/movie/detail/DetailMovie";
 import Checkout from "../pages/client/checkout/Checkout";
 import ShowtimePicker from "../pages/client/movie/detail/component/ShowtimePicker";
 import CheckoutResult from "../pages/client/checkout/CheckoutResult";
+import ListMovies from "../pages/client/movie/ListMovies";
 
 export const MainRoutes: RouteObject[] = [
   {
@@ -16,6 +17,14 @@ export const MainRoutes: RouteObject[] = [
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "movie",
+        element: <ListMovies />,
+      },
+      {
+        path: "movie",
+        element: <ListMovies />,
       },
       {
         path: "movie/:id",
