@@ -9,4 +9,5 @@ export const QUERYKEY = {
   SHOWTIME: Object.assign("SHOWTIME", {
     HAS_DAY: "DAY",
   }),
+  USER: Object.assign("USER_ADMIN", {}),
 };
