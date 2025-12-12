@@ -1,3 +1,4 @@
+import type { IRegisterPayload } from "./auth";
 export interface IBannerUser {
   isBanned: boolean;
   description: string;
@@ -16,3 +17,10 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export type CreateUserPayload = Omit<
+  IRegisterPayload,
+  "confirmPassword" | "password"
+> & {
+  role: string;
+};

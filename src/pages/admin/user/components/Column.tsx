@@ -85,6 +85,17 @@ export const columnUser = (getSorterProps: (field: keyof IUser) => object) => {
       ),
     },
     {
+      title: <p style={{ whiteSpace: "nowrap", margin: 0 }}>Kích hoạt</p>,
+      dataIndex: "isVerified",
+      key: "isVerified",
+      width: 100,
+      render: (isVerified: boolean) => (
+        <p className="whitespace-nowrap">
+          {isVerified ? "Đã kích hoạt" : "Chưa kích hoạt"}
+        </p>
+      ),
+    },
+    {
       title: <p style={{ whiteSpace: "nowrap", margin: 0 }}>Trạng thái</p>,
       dataIndex: "banned",
       key: "banned",
