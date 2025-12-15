@@ -24,3 +24,9 @@ export type CreateUserPayload = Omit<
 > & {
   role: string;
 };
+export interface IPayloadUpdateUser {
+  avatar: string;
+  email: string;
+  phone: string;
+  userName: string;
+}
