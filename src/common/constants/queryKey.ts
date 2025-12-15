@@ -10,4 +10,5 @@ export const QUERYKEY = {
   TICKET: Object.assign("TICKET", {
     USER: "USER",
   }),
+  USER: Object.assign("USER_ADMIN", {}),
 };
