@@ -17,6 +17,7 @@ import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
 import ListShowtimeInMovie from "../pages/admin/showtime/showtimeMovie/ListShowtimeInMovie";
 import CreateMovieShowtime from "../pages/admin/showtime/create/CreateMovieShowtime";
 import ListShowtimeToday from "../pages/admin/showtime/ListShowtimeToday";
+import ScanQR from "../pages/admin/ticket/scanQR/ScanQR";
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",
@@ -108,6 +109,15 @@ export const AdminRoutes: RouteObject[] = [
       {
         path: "user",
         element: <ListUser />,
+      },
+    ],
+  },
+  {
+    path: "ticket",
+    children: [
+      {
+        path: "qr",
+        element: <ScanQR />,
       },
     ],
   },
