@@ -7,8 +7,8 @@ import type { IPayloadUpdateUser } from "../../../common/types/user";
 import { formRules } from "../../../common/utils/formRules";
 import { uploadImage } from "../../../common/utils/upload";
 import UploadImage from "../../../components/UploadImage";
+import ChangePasswordModal from "./components/ChangePasswordModal";
 import { useMessage } from "../../../common/hooks/useMassage";
-import ChangePasswordModal from "./components/ChangePasswwordModal";
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);

@@ -1,5 +1,7 @@
+import type { IParams } from "../types/parameter";
 import type { TypeResponse } from "../types/response";
-import type { IPayloadUpdateUser, IUser } from "../types/user";
+import type { ITicket } from "../types/ticket";
+import type { IUser, IPayloadUpdateUser } from "../types/user";
 import api from "../utils/api";
 
 export const getProfile = async (): Promise<TypeResponse<IUser>> => {
@@ -19,5 +21,12 @@ export const changePassword = async (payload: {
   newPassword: string;
 }): Promise<TypeResponse<IUser>> => {
   const { data } = await api.patch("/user/change-password", payload);
+  return data;
+};
+
+export const getMyTicket = async (
+  query: IParams,
+): Promise<TypeResponse<ITicket[]>> => {
+  const { data } = await api.get(`/user/my-ticket`, { params: query });
   return data;
 };
