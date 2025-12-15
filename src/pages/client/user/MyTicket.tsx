@@ -3,15 +3,15 @@ import { Pagination, Table, Tag, type TableProps } from "antd";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router";
 import { QUERYKEY } from "../../../common/constants/queryKey";
-import { useTableHook } from "../../../common/hooks/useTableHook";
-import { getMyTicket } from "../../../common/services/user.service";
-import { useAuthSelector } from "../../../common/stores/useAuthStore";
-import { formatCurrency } from "../../../common/utils";
-import type { ITicket } from "../../../common/types/ticket";
 import {
   TICKET_STATUS,
   TICKET_STATUS_COLOR,
 } from "../../../common/constants/ticket";
+import { useTableHook } from "../../../common/hooks/useTableHook";
+import { getMyTicket } from "../../../common/services/user.service";
+import { useAuthSelector } from "../../../common/stores/useAuthStore";
+import type { ITicket } from "../../../common/types/ticket";
+import { formatCurrency } from "../../../common/utils";
 
 const MyTicket = () => {
   const columns = [

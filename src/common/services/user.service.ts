@@ -1,7 +1,7 @@
 import type { IParams } from "../types/parameter";
 import type { TypeResponse } from "../types/response";
 import type { ITicket } from "../types/ticket";
-import type { IPayloadUpdateUser, IUser } from "../types/user";
+import type { IUser, IPayloadUpdateUser } from "../types/user";
 import api from "../utils/api";
 
 export const getProfile = async (): Promise<TypeResponse<IUser>> => {
