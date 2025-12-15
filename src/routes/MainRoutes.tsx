@@ -8,7 +8,6 @@ import ShowtimePicker from "../pages/client/movie/detail/components/ShowtimePick
 import Checkout from "../pages/client/checkout/Checkout";
 import CheckoutResult from "../pages/client/checkout/CheckoutResult";
 
-
 export const MainRoutes: RouteObject[] = [
   {
     path: "",
