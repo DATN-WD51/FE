@@ -1,5 +1,6 @@
 import type { IParams } from "../types/parameter";
 import type { TypeResponse } from "../types/response";
+import type { IRoom } from "../types/room";
 import type { ISeatStatus } from "../types/seat";
 import api from "../utils/api";
 
@@ -9,7 +10,12 @@ export const getSeatShowtime = async (
   showtimeId: string,
   params?: IParams,
 ): Promise<
-  TypeResponse<{ rows: number; cols: number; seats: ISeatStatus[] }>
+  TypeResponse<{
+    room: IRoom;
+    rows: number;
+    cols: number;
+    seats: ISeatStatus[];
+  }>
 > => {
   const { data } = await api.get(`${prefix}/seat-map/${roomId}/${showtimeId}`, {
     params,

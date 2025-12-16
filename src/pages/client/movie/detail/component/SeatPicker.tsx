@@ -108,7 +108,10 @@ const SeatPicker = () => {
             <div>
               <div className="mb-2 flex items-center justify-between">
                 <p className="text-base">
-                  Giờ chiếu: <span className="font-bold text-lg">{hour}</span>
+                  Giờ chiếu:{" "}
+                  <span className="font-bold text-lg">
+                    {hour} ({data?.data.room.name})
+                  </span>
                 </p>
                 <div className="flex items-end">
                   <p className="text-base">Thời gian còn lại: </p>

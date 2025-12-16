@@ -11,6 +11,7 @@ import Profile from "../pages/client/user/Profile";
 import MyTicket from "../pages/client/user/MyTicket";
 import ListMovies from "../pages/client/movie/ListMovies";
 import ShowtimePicker from "../pages/client/movie/detail/component/ShowtimePicker";
+import DetailTicket from "../pages/client/user/detailTicket/detailTicket";
 
 export const MainRoutes: RouteObject[] = [
   {
@@ -58,6 +59,10 @@ export const MainRoutes: RouteObject[] = [
             element: <MyTicket />,
           },
         ],
+      },
+      {
+        path: "ticket/:ticketId",
+        element: <DetailTicket />,
       },
     ],
   },
