@@ -12,6 +12,8 @@ import {
   customStatusRender,
   getStatusQrCode,
 } from "../../../../common/utils/qrCode";
+import { useRef } from "react";
+import * as htmlToImage from "html-to-image";
 const column = [
   {
     title: "Phòng chiếu",
