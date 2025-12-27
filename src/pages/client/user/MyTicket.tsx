@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router";
 import { QUERYKEY } from "../../../common/constants/queryKey";
 import {
+  STATUS_TICKET,
   TICKET_STATUS,
   TICKET_STATUS_COLOR,
 } from "../../../common/constants/ticket";
@@ -12,8 +13,10 @@ import { getMyTicket } from "../../../common/services/user.service";
 import { useAuthSelector } from "../../../common/stores/useAuthStore";
 import type { ITicket } from "../../../common/types/ticket";
 import { formatCurrency } from "../../../common/utils";
+import { useMessage } from "../../../common/hooks/useMassage";
 
 const MyTicket = () => {
+  const { antdMessage } = useMessage();
   const columns = [
     {
       title: <p style={{ whiteSpace: "nowrap", margin: 0 }}>Ngày giao dịch</p>,
@@ -47,6 +50,7 @@ const MyTicket = () => {
       dataIndex: "status",
       key: "status",
       filters: [
+        { text: "Chờ thanh toán", value: "PENDING_PAID" },
         { text: "Đã mua", value: "PENDING" },
         { text: "Đã sử dụng", value: "CONFIRMED" },
         { text: "Đã bị huỷ", value: "CANCELLED" },
@@ -94,7 +98,17 @@ const MyTicket = () => {
         pagination={false}
         onRow={(record) => {
           return {
-            onClick: () => navigate(`/ticket/${record._id}`),
+            onClick: () => {
+              const blockedStatus = [
+                STATUS_TICKET.PENDING,
+                STATUS_TICKET.PENDING_PAID,
+              ];
+              if (!blockedStatus.includes(record.status as string)) {
+                navigate(`/ticket/${record._id}`);
+              } else {
+                antdMessage.info("Vé hiện không khả dụng");
+              }
+            },
             style: { cursor: "pointer" },
           };
         }}
