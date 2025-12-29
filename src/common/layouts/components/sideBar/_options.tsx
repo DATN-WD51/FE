@@ -5,6 +5,8 @@ import {
   LineChartOutlined,
   TeamOutlined,
   TagOutlined,
+  ContainerOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import type { JSX } from "react";
 
@@ -22,9 +24,23 @@ export type IMenuItem = {
 
 export const menuGroups: IMenuItem[] = [
   {
+    icon: <HomeOutlined />,
+    label: "DashBoard",
+    route: "/admin",
+  },
+  {
     icon: <LineChartOutlined />,
     label: "Thống kê",
-    route: "/admin",
+    route: "/admin/stats/ticket",
+    children: [
+      { label: "Thống kê vé", route: "/admin/stats/ticket" },
+      { label: "Thống kê doah thu", route: "/admin/stats/revenue" },
+    ],
+  },
+  {
+    icon: <ContainerOutlined />,
+    label: "Quản lý vé",
+    route: "/admin/ticket",
   },
   {
     icon: <VideoCameraOutlined />,
