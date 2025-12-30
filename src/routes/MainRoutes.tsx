@@ -5,9 +5,13 @@ import LoginGoogle from "../pages/client/auth/LoginGoogle";
 import VerifyUser from "../pages/client/auth/VerifyUser";
 import DetailMovie from "../pages/client/movie/detail/DetailMovie";
 import Checkout from "../pages/client/checkout/Checkout";
-import ShowtimePicker from "../pages/client/movie/detail/component/ShowtimePicker";
 import CheckoutResult from "../pages/client/checkout/CheckoutResult";
+import ProfileLayout from "../common/layouts/ProfileLayout";
+import Profile from "../pages/client/user/Profile";
+import MyTicket from "../pages/client/user/MyTicket";
 import ListMovies from "../pages/client/movie/ListMovies";
+import ShowtimePicker from "../pages/client/movie/detail/component/ShowtimePicker";
+import DetailTicket from "../pages/client/user/detailTicket/detailTicket";
 
 export const MainRoutes: RouteObject[] = [
   {
@@ -41,6 +45,24 @@ export const MainRoutes: RouteObject[] = [
       {
         path: "/checkout-result",
         element: <CheckoutResult />,
+      },
+      {
+        path: "profile",
+        element: <ProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "ticket",
+            element: <MyTicket />,
+          },
+        ],
+      },
+      {
+        path: "ticket/:ticketId",
+        element: <DetailTicket />,
       },
     ],
   },
