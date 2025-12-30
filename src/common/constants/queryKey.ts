@@ -11,4 +11,7 @@ export const QUERYKEY = {
     USER: "USER",
   }),
   USER: Object.assign("USER_ADMIN", {}),
+  STATS: Object.assign("STATS", {
+    OVERVIEW: "OVERVIEW",
+  }),
 };
