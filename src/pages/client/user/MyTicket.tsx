@@ -99,10 +99,7 @@ const MyTicket = () => {
         onRow={(record) => {
           return {
             onClick: () => {
-              const blockedStatus = [
-                STATUS_TICKET.PENDING,
-                STATUS_TICKET.PENDING_PAID,
-              ];
+              const blockedStatus = [STATUS_TICKET.PENDING_PAID];
               if (!blockedStatus.includes(record.status as string)) {
                 navigate(`/ticket/${record._id}`);
               } else {
