@@ -20,11 +20,16 @@ import ListShowtimeToday from "../pages/admin/showtime/ListShowtimeToday";
 import ListTicket from "../pages/admin/ticket/ListTicket";
 import ScanQR from "../pages/admin/ticket/scanQR/ScanQR";
 import StatsRevenue from "../pages/admin/statistics/statustics-revenue/StatsRevenue";
+import AdminProtected from "../common/layouts/protected/AdminProtected";
 
 export const AdminRoutes: RouteObject[] = [
   {
     path: "admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminProtected>
+        <AdminLayout />
+      </AdminProtected>
+    ),
     children: [
       {
         index: true,
