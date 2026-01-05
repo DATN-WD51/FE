@@ -13,14 +13,15 @@ import UpdateCategory from "../pages/admin/category/update/UpdateCategory";
 import SeatRoom from "../pages/admin/room/SeatRoom/SeatRoom";
 import CreateRoom from "../pages/admin/room/create/CreateRoom";
 import UpdateRoom from "../pages/admin/room/update/UpdateRoom";
-import DetailMovie from "../pages/admin/movie/detail/DetailFilm";
+
 import ListShowtimeInMovie from "../pages/admin/showtime/showtimeMovie/ListShowtimeInMovie";
 import CreateMovieShowtime from "../pages/admin/showtime/create/CreateMovieShowtime";
 import ListShowtimeToday from "../pages/admin/showtime/ListShowtimeToday";
 import ListTicket from "../pages/admin/ticket/ListTicket";
 import ScanQR from "../pages/admin/ticket/scanQR/ScanQR";
-import StatsRevenue from "../pages/admin/statistics/statustics-revenue/StatsRevenue";
 import AdminProtected from "../common/layouts/protected/AdminProtected";
+import DetailMovie from "../pages/client/movie/detail/DetailMovie";
+import StatsTicket from "../pages/admin/statistics/statustics-revenue/stantistics-ticket/StatsTicket";
 
 export const AdminRoutes: RouteObject[] = [
   {
@@ -39,12 +40,11 @@ export const AdminRoutes: RouteObject[] = [
         path: "stats",
         children: [
           {
-            path: "revenue",
-            element: <StatsRevenue />,
+            path: "ticket",
+            element: <StatsTicket />,
           },
         ],
       },
-
       {
         path: "movie",
         children: [

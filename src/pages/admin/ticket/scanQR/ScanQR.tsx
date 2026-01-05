@@ -16,7 +16,8 @@ import { formatCurrency } from "../../../../common/utils";
 import { useMessage } from "../../../../common/hooks/useMassage";
 import { PrinterOutlined } from "@ant-design/icons";
 import { useReactToPrint } from "react-to-print";
-import TicketPrint from "./components/TicketPrint";
+import TicketPrint from "../components/TicketPrint";
+
 const column = [
   {
     title: "Phòng chiếu",
