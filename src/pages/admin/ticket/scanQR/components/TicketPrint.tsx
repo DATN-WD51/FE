@@ -1,7 +1,7 @@
 import { Watermark } from "antd";
 import dayjs from "dayjs";
 import { forwardRef } from "react";
-import type { ITicket } from "../../../../common/types/ticket";
+import type { ITicket } from "../../../../../common/types/ticket";
 
 const TicketPrint = forwardRef<HTMLDivElement, { ticket: ITicket }>(
   ({ ticket }, ref) => {
