@@ -31,6 +31,7 @@ const ShowtimePicker = () => {
         order: "asc",
         limit: 7,
         groupTime: true,
+        userApi: true,
         startTimeFrom: dayjs()
           .add(2, "hour")
           .second(0)
@@ -51,51 +52,57 @@ const ShowtimePicker = () => {
   return (
     <section>
       <div className="bg-[#1a1d23] h-24 relative flex items-center justify-center">
-        {data?.meta && data.meta.page !== 1 && (
-          <button
-            onClick={() =>
-              onSelectPaginateChange(
-                (data.meta?.page as number) - 1,
-                data.meta?.limit,
-              )
-            }
-            className="px-5 bg-[#dc2626] h-full absolute left-0 hover:opacity-80 transition cursor-pointer"
-          >
-            <LeftOutlined />
-          </button>
+        {data && Object.entries(data.data).length === 0 ? (
+          <p className="text-red-500">Phim hiện không có suất chiếu nào</p>
+        ) : (
+          <>
+            {data?.meta && data.meta.page !== 1 && (
+              <button
+                onClick={() =>
+                  onSelectPaginateChange(
+                    (data.meta?.page as number) - 1,
+                    data.meta?.limit,
+                  )
+                }
+                className="px-5 bg-[#dc2626] h-full absolute left-0 hover:opacity-80 transition cursor-pointer"
+              >
+                <LeftOutlined />
+              </button>
+            )}
+            {data?.data &&
+              Object.entries(data.data).map(([date, showtime]) => (
+                <div
+                  onClick={() => {
+                    if (showtimeId && roomId) return;
+                    setDateSelect(date);
+                    setShowtime(showtime);
+                  }}
+                  className={`${date === dateSelect && "bg-[#dc2626]"} cursor-pointer h-full justify-center w-22 flex flex-col items-center`}
+                >
+                  <p>{dayjs(date).format("[Thg.] MM")}</p>
+                  <p className="font-semibold text-2xl">
+                    {dayjs(date).format("DD")}
+                  </p>
+                  <p>{DAYOFWEEK_LABEL[dayjs(date).day()]}</p>
+                </div>
+              ))}
+            {data?.meta &&
+              data?.meta?.limit < data?.meta?.total &&
+              data?.meta?.page !== data?.meta?.totalPages && (
+                <button
+                  onClick={() => {
+                    onSelectPaginateChange(
+                      (data.meta?.page as number) + 1,
+                      data.meta?.limit,
+                    );
+                  }}
+                  className="px-5 bg-[#dc2626] h-full absolute right-0 hover:opacity-80 transition cursor-pointer"
+                >
+                  <RightOutlined />
+                </button>
+              )}
+          </>
         )}
-        {data?.data &&
-          Object.entries(data.data).map(([date, showtime]) => (
-            <div
-              onClick={() => {
-                if (showtimeId && roomId) return;
-                setDateSelect(date);
-                setShowtime(showtime);
-              }}
-              className={`${date === dateSelect && "bg-[#dc2626]"} cursor-pointer h-full justify-center w-22 flex flex-col items-center`}
-            >
-              <p>{dayjs(date).format("[Thg.] MM")}</p>
-              <p className="font-semibold text-2xl">
-                {dayjs(date).format("DD")}
-              </p>
-              <p>{DAYOFWEEK_LABEL[dayjs(date).day()]}</p>
-            </div>
-          ))}
-        {data?.meta &&
-          data?.meta?.limit < data?.meta?.total &&
-          data?.meta?.page !== data?.meta?.totalPages && (
-            <button
-              onClick={() => {
-                onSelectPaginateChange(
-                  (data.meta?.page as number) + 1,
-                  data.meta?.limit,
-                );
-              }}
-              className="px-5 bg-[#dc2626] h-full absolute right-0 hover:opacity-80 transition cursor-pointer"
-            >
-              <RightOutlined />
-            </button>
-          )}
       </div>
       {!roomId || !showtimeId ? (
         <>
@@ -105,6 +112,7 @@ const ShowtimePicker = () => {
                 (item.externalRoom?.length as number) > 1 ? (
                   <ModalSelectRoom
                     showtime={item}
+                    movieId={item.movieId._id}
                     room={item.externalRoom as IRoom[]}
                   >
                     <button
