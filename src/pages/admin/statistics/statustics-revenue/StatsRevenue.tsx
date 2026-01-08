@@ -1,8 +1,10 @@
 const StatsRevenue = () => {
   return (
-    <div className="bg-[#121822] w-full min-h-[70dvh] rounded-md px-6 py-4">
-      <p className="text-lg font-semibold mb-4">Thống kê doanh thu</p>
-    </div>
+    <section className="w-full min-h-[70dvh] rounded-md bg-[#121822] px-6 py-4">
+      <h2 className="mb-4 text-lg font-semibold text-white">
+        Thống kê doanh thu
+      </h2>
+    </section>
   );
 };
 
