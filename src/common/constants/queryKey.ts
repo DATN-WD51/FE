@@ -6,12 +6,16 @@ export const QUERYKEY = {
   }),
   ROOM: Object.assign("ROOM", {}),
   SEAT: Object.assign("SEAT", {}),
-  SHOWTIME: Object.assign("SHOWTIME", {}),
+  SHOWTIME: Object.assign("SHOWTIME", {
+    HAS_DAY: "DAY",
+  }),
   TICKET: Object.assign("TICKET", {
     USER: "USER",
   }),
   USER: Object.assign("USER_ADMIN", {}),
   STATS: Object.assign("STATS", {
     OVERVIEW: "OVERVIEW",
+    TICKET: "TICKET",
+    SEATS: "SEATS",
   }),
 };
